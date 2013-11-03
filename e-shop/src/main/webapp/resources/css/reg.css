@@ -1,0 +1,81 @@
+#right-center
+{
+	width: 1000px;
+	margin: 0 auto;
+}
+.error{
+	font-size: 8pt;
+	color: red;
+	display: block;
+}
+
+#tabReg
+{
+	padding-top: 0px;
+	margin-top: 0px;
+}
+#tabReg td{
+	
+	padding: 10px;
+	padding-left: 0px;
+}
+input{
+	padding: 2px;
+}
+#subtr {
+	text-decoration: none;
+	color: red;
+}
+
+
+#mes{
+	color: red;
+}
+
+#form{
+	height: 100px;
+	padding:25px;
+	padding-top: 50px;
+	margin-left: 300px;
+	margin: 0 auto;
+	width: 350px;
+	height: 550px;
+	font-family: "Tahoma",sans-serif;
+	font-weight: normal;
+	text-align: center;
+}
+#form a{
+	text-decoration: none;
+	color: orange;
+}
+.list{
+	list-style:none;
+	color: #AAA;
+	font-size: 13px;
+	border-left: 1px solid #AAA;
+	padding-left: 10px;
+	
+}
+.list a{
+	text-decoration: none;
+	color: #AAA;
+}
+input{
+	padding: 5px;
+	width: 200px;
+}
+.sub
+{
+	color: white;
+	width: 100px;
+	background-color: #8AC74A;
+	margin: 0 auto;
+	margin-left: 125px;
+}
+#tabLogSub
+{
+    	width: 90px;
+    	background-color: #8AC74A;
+    	color: white;
+}
+
