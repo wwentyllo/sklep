@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cebul.jez.entity.User;
 import com.cebul.jez.service.UserService;
@@ -81,6 +82,17 @@ public class RegisterController
 			e.printStackTrace();
 		}
 		return "redirect:/home/";
+	}
+	@RequestMapping(value="/register/ajax.do", method=RequestMethod.POST)
+	public @ResponseBody String chenckLogin(@RequestParam String username)
+	{
+		String response = "";
+		boolean isExsistUser = userService.isUserExsist(username);
+		if(isExsistUser)
+		{
+			response = "Taki użytkonik już istnieje!";
+		}
+		return response;
 	}
 	public boolean isUserLogged(HttpSession session)
 	{

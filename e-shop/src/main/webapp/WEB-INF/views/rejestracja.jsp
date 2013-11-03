@@ -56,11 +56,11 @@ function doAjaxPost()
     var username = $('#login').val();
     $.ajax({
 	    type: "POST",
-		    url: "/portal/register/ajax.do",
+		    url: "/jez/register/ajax.do",
 		    data: "username=" + username,
 		    success: function(response)
 		    {
-			    
+		    	alert(response);
 		    	if(response != "")
 		    	{
 		    		$("#login_error").text("Taki użytkownik juz istnieje!");

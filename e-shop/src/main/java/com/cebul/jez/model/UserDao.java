@@ -72,4 +72,17 @@ public class UserDao
 		List<User> result = query.list();
 		return result.get(0);
 	}
+	public boolean isUserExsist(String login)
+	{
+		Session session = getSessionFactory();
+		Query query = session.createSQLQuery("SELECT * FROM users WHERE login = :username ").
+				addEntity(User.class).setParameter("username", login);
+		List<User> result = query.list();
+		if(!result.isEmpty())
+		{
+			
+			return true;
+		}
+		return false;
+	}
 }
