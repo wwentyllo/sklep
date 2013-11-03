@@ -24,13 +24,19 @@ public class Kategoria
 	@NotNull
 	private String Nazwa;
 	
-	@Column(name="IdParentKat")
-	private Integer idParentKat;
-	
 	@OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="Id")
+    @JoinColumn(name="IdParentKat")
 	private Kategoria parentKategory;
 
+	public Kategoria()
+	{
+		
+	}
+	public Kategoria(String nazwa, Kategoria parent)
+	{
+		this.Nazwa = nazwa;
+		this.parentKategory = parent;
+	}
 	public int getId() {
 		return id;
 	}

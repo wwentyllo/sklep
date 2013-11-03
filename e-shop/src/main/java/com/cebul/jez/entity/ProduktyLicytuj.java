@@ -24,6 +24,18 @@ public class ProduktyLicytuj extends Produkty
 	@JoinColumn(name="IdNabywcy")
 	private User nabywca;
 
+	public ProduktyLicytuj()
+	{
+		
+	}
+	public ProduktyLicytuj(String nazwa, String opis, Double cena, Date data, Kategoria kategoria,
+			Zdjecie zdjecie, User user)
+	{
+		super(nazwa, opis, cena, data, kategoria, zdjecie, user);
+		this.dataZakonczenia = new Date();
+		this.nabywca = null;
+	}
+	
 	public Date getDataZakonczenia() {
 		return dataZakonczenia;
 	}

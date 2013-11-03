@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.model.UserDao;
 import com.cebul.jez.service.KategorieService;
+import com.cebul.jez.service.TestDataBaseService;
 import com.cebul.jez.service.UserService;
 import com.cebul.jez.useful.Mail;
 
@@ -26,9 +27,14 @@ public class HomeController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TestDataBaseService dbService;
 		
 	@RequestMapping(value = {"/", "/home"})
 	public String home(Model model){
+		
+		dbService.test1();
 		
 		List<Kategoria> kat = kategorieService.getMainKategory();
 		model.addAttribute("kategoryList", kat);

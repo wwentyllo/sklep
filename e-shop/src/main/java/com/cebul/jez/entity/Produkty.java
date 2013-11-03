@@ -1,7 +1,10 @@
 package com.cebul.jez.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -28,38 +33,56 @@ public class Produkty {
 	@NotNull
 	private String nazwa;
 	
-	@Column(name="Opis")
+	@Column(name="Opis", columnDefinition="TEXT")
 	@NotNull
 	private String opis;
 	
-	@Column(name="IdKat")
-	private Integer idKat;
-	
-	@Column(name="IdZdjGlow")
-	private Integer idZdjGlow;
-	
-	@Column(name="IdWlas")
-	private Integer idWlas;
-	
 	@Column(name="Cena")
 	@NotNull
-	private Integer cena;
+	private Double cena;
 	
 	@Column(name="DataDodania")
 	@NotNull
 	private Date dataDodania;
 	
 	@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="IdKat")
 	private Kategoria kategorie;
 	
 	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IdZdjGlow")
 	private Zdjecie zdjecie;
 	
 	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IdWlas")
 	private User user;
 
+	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinTable(name = "prod_zdj", joinColumns = { @JoinColumn(name = "IdProdukt") }, 
+	inverseJoinColumns = { @JoinColumn(name = "IdZdjecia") })
+	private Collection<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
 	
-	
+	public Collection<Zdjecie> getZdjecia() {
+		return zdjecia;
+	}
+	public void setZdjecia(Collection<Zdjecie> zdjecia) {
+		this.zdjecia = zdjecia;
+	}
+	public Produkty()
+	{
+		
+	}
+	public Produkty(String nazwa, String opis, Double cena, Date data, Kategoria kategoria,
+			Zdjecie zdjecie, User user)
+	{
+		this.nazwa = nazwa;
+		this.opis = opis;
+		this.cena= cena;
+		this.dataDodania = data;
+		this.kategorie = kategoria;
+		this.zdjecie = zdjecie;
+		this.user = user;
+	}
 	public Kategoria getKategorie() {
 		return kategorie;
 	}
@@ -108,35 +131,11 @@ public class Produkty {
 		this.opis = opis;
 	}
 
-	public Integer getIdKat() {
-		return idKat;
-	}
-
-	public void setIdKat(Integer idKat) {
-		this.idKat = idKat;
-	}
-
-	public Integer getIdZdjGlow() {
-		return idZdjGlow;
-	}
-
-	public void setIdZdjGlow(Integer idZdjGlow) {
-		this.idZdjGlow = idZdjGlow;
-	}
-
-	public Integer getIdWlas() {
-		return idWlas;
-	}
-
-	public void setIdWlas(Integer idWlas) {
-		this.idWlas = idWlas;
-	}
-
-	public Integer getCena() {
+	public Double getCena() {
 		return cena;
 	}
 
-	public void setCena(Integer cena) {
+	public void setCena(Double cena) {
 		this.cena = cena;
 	}
 
