@@ -56,9 +56,11 @@ public class User implements Serializable
 	private String plec;
 	
 	@Column(name="Rok")
+	@NotNull
 	private Integer rok;
 	
 	@Column(name="Miesiac")
+	@NotNull
 	private Integer miesiac;
 	
 	@Column(name="Dzien")

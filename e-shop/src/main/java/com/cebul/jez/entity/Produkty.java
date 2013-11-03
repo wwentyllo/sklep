@@ -12,6 +12,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Produkty")
@@ -24,9 +25,11 @@ public class Produkty {
 	private Integer id;
 	
 	@Column(name="Nazwa")
+	@NotNull
 	private String nazwa;
 	
 	@Column(name="Opis")
+	@NotNull
 	private String opis;
 	
 	@Column(name="IdKat")
@@ -39,9 +42,11 @@ public class Produkty {
 	private Integer idWlas;
 	
 	@Column(name="Cena")
+	@NotNull
 	private Integer cena;
 	
 	@Column(name="DataDodania")
+	@NotNull
 	private Date dataDodania;
 	
 	@OneToOne(fetch=FetchType.EAGER)

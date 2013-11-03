@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Wiadomosci")
@@ -21,15 +22,19 @@ public class Wiadomosc {
 	private Integer idWiad;
 	
 	@Column(name="Tytul")
+	@NotNull
 	private String tytul;
 	
 	@Column(name="Tresc", columnDefinition="TEXT")
+	@NotNull
 	private String tresc;
 	
 	@Column(name="Data")
+	@NotNull
 	private Date data;
 	
 	@Column(name="Odczytana")
+	@NotNull
 	private boolean odczytana;
 
 	@OneToOne(fetch=FetchType.LAZY)

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Komentarze")
@@ -18,26 +19,22 @@ public class Komentarz
 	@GeneratedValue
 	@Column(name="Id")
 	private Integer id;
-	
-	@Column(name="IdNadaw")
-	private Integer idNad;
-	
-	@Column(name="IdOdb")
-	private Integer idOdb;
-	
+		
 	@Column(name="Komentarz", columnDefinition="TEXT")
+	@NotNull
 	private String komentarz;
 	
 	@Column(name="Ocena")
+	@NotNull
 	private Integer ocena;
 	
 	
 	@OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="Id")
+    @JoinColumn(name="IdNadaw")
 	private User nadawca;
 	
 	@OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="Id")
+    @JoinColumn(name="IdOdb")
 	private User odbiorca;
 	
 	public Integer getId() {
@@ -45,18 +42,6 @@ public class Komentarz
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public Integer getIdNad() {
-		return idNad;
-	}
-	public void setIdNad(Integer idNad) {
-		this.idNad = idNad;
-	}
-	public Integer getIdOdb() {
-		return idOdb;
-	}
-	public void setIdOdb(Integer idOdb) {
-		this.idOdb = idOdb;
 	}
 	public String getKomentarz() {
 		return komentarz;

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Hist_Wyszuk")
@@ -20,6 +21,7 @@ public class Hist_Wyszuk
 	private Integer id;
 	
 	@Column(name="Data")
+	@NotNull
 	private Date data;
 	
 	@OneToOne

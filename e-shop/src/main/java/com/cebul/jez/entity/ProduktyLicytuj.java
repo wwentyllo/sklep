@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="ProduktyLicytuj")
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 public class ProduktyLicytuj extends Produkty
 {
 	@Column(name="DataZakonczenia")
+	@NotNull
 	private Date dataZakonczenia;
 	
 	@OneToOne(fetch=FetchType.EAGER)

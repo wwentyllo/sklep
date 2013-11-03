@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="ProduktyKupTeraz")
@@ -15,6 +16,7 @@ public class ProduktyKupTeraz extends Produkty
 {
 	
 	@Column(name="DataKupna")
+	@NotNull
 	private Integer dataKupna;
 	
 	@OneToOne(fetch=FetchType.EAGER)

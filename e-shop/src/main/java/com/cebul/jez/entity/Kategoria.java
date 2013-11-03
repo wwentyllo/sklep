@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="kategorie")
@@ -20,6 +21,7 @@ public class Kategoria
 	private int id;
 	
 	@Column(name="Nazwa")
+	@NotNull
 	private String Nazwa;
 	
 	@Column(name="IdParentKat")
