@@ -15,4 +15,5 @@ public class DoTestowania
 		}
 		return max;
 	}
+	
 }
