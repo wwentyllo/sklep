@@ -17,6 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cebul.jez.entity.User;
 import com.cebul.jez.model.UserDao;
 
+/**
+ * 
+ * @author Mateusz
+ *	Klasa działa jako kontroler w modelu MVC
+ *	używa mechanizmu DI do wstrzykiwania zależnosći
+ *	obsługuje żądania z ścieżki "/logowanie/*"
+ */
+
 @Controller
 public class LogController
 {
@@ -24,6 +32,12 @@ public class LogController
 	@Autowired
 	private UserDao userDao;
 	
+	/**
+	 * obsługuje żądanie dostępu do "/logowanie"
+	 * @param model zawiera referencje do obiektu modelu
+	 * @param session zawiera referencję do obiektu sesji
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/logowanie")
 	public String home(Model model, HttpSession session) 
 	{
@@ -32,6 +46,13 @@ public class LogController
 		
 		return "logowanie";
 	}
+	/**
+	 * obsługuje żądanie dostępu do "/logowanie/setUserSession"
+	 * @param model  zawiera referencje do obiektu modelu
+	 * @param session zawiera referencję do obiektu sesji
+	 * @param request zawiera referencję do obiektu HttpServletRequest
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/logowanie/setUserSession")
 	public String setSessionUser(Model model, HttpSession session, HttpServletRequest request) 
 	{
@@ -44,6 +65,13 @@ public class LogController
 		session.setAttribute("sessionUser", u);
 		return "redirect:/home";
 	}
+	/**
+	 * obsługuje żądanie dostępu do "/login"
+	 * @param login_error parametr ten określa wystąpnienie błedu podczas logowania i
+	 * 						umożliwia wyświetlenie strony błednego logowania
+	 * @param session odnosi się do okiektu sesji
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = "/login", method=RequestMethod.GET, params="login_error" )
 	public String errorLogin(@RequestParam String login_error, HttpSession session)
 	{
@@ -52,6 +80,11 @@ public class LogController
 		
 		return "loginError";
 	}
+	/**
+	 * sprawdza czy uzytkownik jest już zalogowany do seystemu
+	 * @param session odnosi się do obiektu sesji
+	 * @return zwraca true lub false w zależnosci od tego czy użytkownik jest zalogowany czy nie
+	 */
 	public boolean isUserLogged(HttpSession session)
 	{
 		User u = (User) session.getAttribute("sessionUser");

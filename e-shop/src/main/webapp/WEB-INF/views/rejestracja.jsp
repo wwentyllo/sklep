@@ -60,7 +60,6 @@ function doAjaxPost()
 		    data: "username=" + username,
 		    success: function(response)
 		    {
-		    	alert(response);
 		    	if(response != "")
 		    	{
 		    		$("#login_error").text("Taki użytkownik juz istnieje!");
@@ -198,21 +197,21 @@ function doAjaxPost()
 						</tr>
 						<tr>
 							<td>
-								<label for="miejscowosc"> Miejsce zamieszkania:</label>
+								<label for="adres.miejscowosc"> Miejsce zamieszkania:</label>
 							</td>
 							<td>
-								<sf:input id="miejscowosc" path="miejscowosc" />
-								<sf:errors path="miejscowosc" cssClass="error" />
+								<sf:input id="miejscowosc" path="adres.miejscowosc" />
+								<sf:errors path="adres.miejscowosc" cssClass="error" />
 							</td>
 							
 						</tr>
 						<tr>
 							<td>
-								<label for="kod_pocztowy"> Kod Pocztowy:</label>
+								<label for="adres.kod_pocztowy"> Kod Pocztowy:</label>
 							</td>
 							<td>
-								<sf:input  id="kod_pocztowy" path="kod_pocztowy" />
-								<sf:errors path="kod_pocztowy" cssClass="error" />
+								<sf:input  id="kod_pocztowy" path="adres.kod_pocztowy" />
+								<sf:errors path="adres.kod_pocztowy" cssClass="error" />
 							</td>
 							
 						</tr>

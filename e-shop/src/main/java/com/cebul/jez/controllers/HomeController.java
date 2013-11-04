@@ -1,5 +1,6 @@
 package com.cebul.jez.controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,13 @@ import com.cebul.jez.service.TestDataBaseService;
 import com.cebul.jez.service.UserService;
 import com.cebul.jez.useful.Mail;
 
+/**
+ * 
+ * @author Mateusz Cebularz
+ * Klasa pelniaca zadanie kontrolera w modelu MVC
+ * Jej zadaniem jest obsługa rządań z ścieżki "/" oraz "/home"
+ * Wykorzystuje mechanizm DI do wstrzykiwania zależnosći
+ */
 @Controller
 public class HomeController {
 	
@@ -31,6 +39,11 @@ public class HomeController {
 	@Autowired
 	private TestDataBaseService dbService;
 		
+	/**
+	 * 
+	 * @param model jest to odniesienie do obiektu modelu
+	 * @return zwraca logiczną nazwę widoku
+	 */
 	@RequestMapping(value = {"/", "/home"})
 	public String home(Model model){
 		

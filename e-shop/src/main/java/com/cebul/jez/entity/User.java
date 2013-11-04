@@ -1,11 +1,16 @@
 package com.cebul.jez.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -43,14 +48,6 @@ public class User implements Serializable
 	@Pattern(regexp="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}" , message="Nie poprawny adres email.")
 	private String email;
 	
-	@Column(name="Miejscowosc")
-	@Size(min=3, max=20, message="Nie ma takiego miejsca.")
-	private String miejscowosc;
-	
-	@Column(name="Kod_Pocztowy")
-	@Size(min=6, max=6, message="Niepoprawny kod pocztowy.")
-	private String kod_pocztowy;
-	
 	@Column(name="Plec")
 	@Size(min=1, max=2, message="Wybierz płeć.")
 	private String plec;
@@ -72,6 +69,18 @@ public class User implements Serializable
 	
 	@Column(name="Enabled")
 	private Integer enabled;
+	
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="Adres")
+	private Adresy adres;
+	
+	public Adresy getAdres() {
+		return adres;
+	}
+
+	public void setAdres(Adresy adres) {
+		this.adres = adres;
+	}
 
 	public User()
 	{
@@ -141,21 +150,6 @@ public class User implements Serializable
 		this.email = email;
 	}
 
-	public String getMiejscowosc() {
-		return miejscowosc;
-	}
-
-	public void setMiejscowosc(String miejscowosc) {
-		this.miejscowosc = miejscowosc;
-	}
-
-	public String getKod_pocztowy() {
-		return kod_pocztowy;
-	}
-
-	public void setKod_pocztowy(String kod_pocztowy) {
-		this.kod_pocztowy = kod_pocztowy;
-	}
 
 	public String getPlec() {
 		return plec;
