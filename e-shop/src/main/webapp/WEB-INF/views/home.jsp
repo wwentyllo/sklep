@@ -14,9 +14,11 @@
 	type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script>
+
 	function searchFocus()
 	{
-		$('#szukanaFraza').val("");
+		if($('#szukanaFraza').val() == "Wpisz czego szuaksz...")
+			$('#szukanaFraza').val("");
 	}
 	function searchFocusOut()
 	{
@@ -25,6 +27,43 @@
 	function showPodkategorie()
 	{
 		
+	}
+	function selectPodpowiedz()
+	{
+		alert("sdada");
+	}
+	function sprawdzSlowo()
+	{
+		var ob = $('#szukanaFraza');
+		var p = ob.position();
+		var left = p.left+10;
+		var top = p.top + 37;
+		$.getJSON( "/jez/szukaj/szukaj.json", {"slowo": $('#szukanaFraza').val()})
+		.done(function( json ) {
+		    
+		    var resp = "<ul>";
+		    $.each(json.produkty, function( index, value ) {
+		    	//alert( index + ": " + value );
+		    	resp += '<li  id="li'+index+'" class="test" value="test1">'+value+'</li>';
+		    	});
+		    resp += "</ul>";
+		    
+		    $('#podpowiedzi').css("top", top).css("left", left).css("display", "block");
+		    $('#podpowiedzi').html(resp);
+		    
+		   $('.test').on("mousedown",function(){ 
+			   var ident = "#"+this.id;
+			   $('#szukanaFraza').val($(ident).html());
+		});
+		    
+		  })
+		 .fail(function( jqxhr, textStatus, error ) {
+		   //alert("error="+error);
+		 }); 	
+	}
+	function ukryjPodpowiedzi()
+	{
+		 $('#podpowiedzi').css("display", "none");
 	}
 </script>
 </head>
@@ -67,24 +106,27 @@
 			<form action="" method="GET">
 				<table>
 					<tr>
-						<td>
-							<input style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;" id='szukanaFraza' type="text" value="Wpisz czego szuaksz..." onfocus="searchFocus();" onfocusout="searchFocusOut();">	
-						</td>
-						<td>
-							<select name='szukanaKat' id='szukanaKat' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
-								<option value="0">WSZĘDZIE
-								</option>
-								<c:forEach items="${kategoryList}" var="element"> 
-									<option value="${element.nazwa}">
-										${element.nazwa}
+						<form action="/szukaj" method="post">
+							<td>
+								<input autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;" id='szukanaFraza' type="text" value="Wpisz czego szuaksz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >	
+							</td>
+							<td>
+								<select name='szukanaKat' id='szukanaKat' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
+									<option value="0">WSZĘDZIE
 									</option>
-									
-								</c:forEach>
-							</select>	
-						</td>
-						<td>
-							<input type="submit" value="Szukaj" style="height: 35px; width: 100px; margin-top: 5px; background-image: linear-gradient(#6E6E6E 0%, #343434 100%); color: white;">	
-						</td>
+									<c:forEach items="${kategoryList}" var="element"> 
+										<option value="${element.id}">
+											${element.nazwa}
+										</option>
+										
+									</c:forEach>
+								</select>	
+							</td>
+							
+							<td>
+								<input type="submit" value="Szukaj" style="height: 35px; width: 100px; margin-top: 5px; background-image: linear-gradient(#6E6E6E 0%, #343434 100%); color: white;">	
+							</td>
+						</form>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px;">
 								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
@@ -115,7 +157,11 @@
 		</div>
 		<div id='bottom'>
 			<span align="center" style="color: #578921; display: block;"><b>Copyright Ⓒ Cebul & Jeżyk</b></span>
+			<span onclick="alert(this.id);" class="test">hsadkjsahkdsa</span>
 		</div>
+	</div>
+	<div id='podpowiedzi' >
+		
 	</div>
 </body>
 </html>

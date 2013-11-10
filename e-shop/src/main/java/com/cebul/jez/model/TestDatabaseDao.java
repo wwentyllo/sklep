@@ -44,7 +44,7 @@ public class TestDatabaseDao
 		session.save(k);
 		session.save(k1);
 		
-		User u = (User) session.get(User.class, 1);
+		User u = (User) session.get(User.class, 2);
 		Zdjecie z = new Zdjecie();
 		z.setZdjecie(new File("test.txt"));
 		session.save(z);

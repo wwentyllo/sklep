@@ -11,20 +11,9 @@ import org.springframework.stereotype.Repository;
 import com.cebul.jez.entity.User;
 
 @Repository
-public class UserDao 
+public class UserDao extends Dao
 {
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	private Session getSessionFactory()
-	{
-		return sessionFactory.getCurrentSession();
-	}
 	
-	private void setSessionFactory(SessionFactory sessionFactory)
-	{
-		this.sessionFactory = sessionFactory;
-	}
 	public void saveUser()
 	{
 		Session session = sessionFactory.getCurrentSession();

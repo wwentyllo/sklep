@@ -22,7 +22,7 @@ public class Kategoria
 	
 	@Column(name="Nazwa")
 	@NotNull
-	private String Nazwa;
+	private String nazwa;
 	
 	@OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="IdParentKat")
@@ -34,7 +34,7 @@ public class Kategoria
 	}
 	public Kategoria(String nazwa, Kategoria parent)
 	{
-		this.Nazwa = nazwa;
+		this.nazwa = nazwa;
 		this.parentKategory = parent;
 	}
 	public int getId() {
@@ -46,11 +46,11 @@ public class Kategoria
 	}
 
 	public String getNazwa() {
-		return Nazwa;
+		return nazwa;
 	}
 
 	public void setNazwa(String nazwa) {
-		Nazwa = nazwa;
+		nazwa = nazwa;
 	}
 	
 	public Kategoria getParentKategory() {

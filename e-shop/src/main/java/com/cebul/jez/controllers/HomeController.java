@@ -14,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cebul.jez.entity.Kategoria;
+import com.cebul.jez.entity.Produkty;
+import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.model.UserDao;
 import com.cebul.jez.service.KategorieService;
+import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.service.TestDataBaseService;
 import com.cebul.jez.service.UserService;
 import com.cebul.jez.useful.Mail;
@@ -38,6 +41,9 @@ public class HomeController {
 	
 	@Autowired
 	private TestDataBaseService dbService;
+	
+	@Autowired
+	private ProduktyService produktyService;
 		
 	/**
 	 * 
@@ -47,7 +53,12 @@ public class HomeController {
 	@RequestMapping(value = {"/", "/home"})
 	public String home(Model model){
 		
-		dbService.test1();
+		//dbService.test1();
+		//List<Produkty> r = produktyService.getProduktyLike("drug", 19);
+		//System.out.println(r.size());
+		//Produkty pro =  r.get(0);
+		//System.out.println(pro.getNazwa());
+		
 		
 		List<Kategoria> kat = kategorieService.getMainKategory();
 		model.addAttribute("kategoryList", kat);
