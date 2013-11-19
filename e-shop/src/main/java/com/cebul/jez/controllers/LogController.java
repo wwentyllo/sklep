@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cebul.jez.entity.User;
+import com.cebul.jez.flows.UserShortInfo;
 import com.cebul.jez.model.UserDao;
 
 /**
@@ -31,6 +32,9 @@ public class LogController
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private UserShortInfo usinfo;
 	
 	/**
 	 * obsługuje żądanie dostępu do "/logowanie"
@@ -63,6 +67,17 @@ public class LogController
 		String userName = principal.getName();
 		User u = userDao.getUser(userName);
 		session.setAttribute("sessionUser", u);
+		
+		// ustawienie komponentu zawierajacego dane usera, widocznego w web flow
+		if(u != null)
+		{
+			usinfo.setId(u.getId());
+			usinfo.setLogin(u.getLogin());
+			usinfo.setEmail(u.getEmail());
+			usinfo.setRanga(u.getRanga());
+		}
+		System.out.println("test uset login:"+usinfo.getLogin() );
+		
 		return "redirect:/home";
 	}
 	/**
@@ -72,7 +87,7 @@ public class LogController
 	 * @param session odnosi się do okiektu sesji
 	 * @return zwraca logiczną nazwę widoku
 	 */
-	@RequestMapping(value = "/login", method=RequestMethod.GET, params="login_error" )
+	@RequestMapping(value = "/logowanie", method=RequestMethod.GET, params="login_error" )
 	public String errorLogin(@RequestParam String login_error, HttpSession session)
 	{
 		if(isUserLogged(session))

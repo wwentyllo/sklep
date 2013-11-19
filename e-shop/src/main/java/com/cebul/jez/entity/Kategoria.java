@@ -1,5 +1,7 @@
 package com.cebul.jez.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="kategorie")
-public class Kategoria 
+public class Kategoria implements Serializable
 {
 	@Id
 	@GeneratedValue

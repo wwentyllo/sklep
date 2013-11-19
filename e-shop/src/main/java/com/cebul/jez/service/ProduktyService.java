@@ -28,4 +28,14 @@ public class ProduktyService
 	{
 		return produktyDao.getProduktyLike(like, kategoria);
 	}
+	@Transactional
+	public boolean saveProduktKupTeraz(ProduktyKupTeraz p)
+	{
+		 return produktyDao.saveProduktKupTeraz(p);
+	}
+	@Transactional
+	public Produkty getProdukt(Integer id)
+	{
+		return produktyDao.getProdukt(id);
+	}
 }

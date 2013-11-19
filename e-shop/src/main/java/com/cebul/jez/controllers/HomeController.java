@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
+import com.cebul.jez.entity.User;
 import com.cebul.jez.model.UserDao;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
@@ -44,6 +45,9 @@ public class HomeController {
 	
 	@Autowired
 	private ProduktyService produktyService;
+	
+	@Autowired
+	private TestDataBaseService serv;
 		
 	/**
 	 * 
@@ -51,7 +55,7 @@ public class HomeController {
 	 * @return zwraca logiczną nazwę widoku
 	 */
 	@RequestMapping(value = {"/", "/home"})
-	public String home(Model model){
+	public String home(Model model, HttpSession session){
 		
 		//dbService.test1();
 		//List<Produkty> r = produktyService.getProduktyLike("drug", 19);
@@ -59,14 +63,17 @@ public class HomeController {
 		//Produkty pro =  r.get(0);
 		//System.out.println(pro.getNazwa());
 		
+		//serv.test1();
+		
 		
 		List<Kategoria> kat = kategorieService.getMainKategory();
-		model.addAttribute("kategoryList", kat);
+		//model.addAttribute("kategoryList", kat);
+		session.setAttribute("kategoryList", kat);
 		
 		HashMap<Integer, List<Kategoria>> podkategorie = new HashMap<Integer, List<Kategoria>>();
 		for(Kategoria k : kat)
 		{
-			podkategorie.put(k.getId(), kategorieService.getPodKategory(k.getNazwa()) );
+			podkategorie.put(k.getId(), kategorieService.getPodKategory(k.getId()) );
 		}
 		
 		

@@ -28,7 +28,7 @@ public class KategorieService
 		return kategorieDao.getMainKategory();
 	}
 	@Transactional
-	public List<Kategoria> getPodKategory(String parent)
+	public List<Kategoria> getPodKategory(Integer parent)
 	{
 		return kategorieDao.getPodKategory(parent);
 	}

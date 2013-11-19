@@ -46,7 +46,7 @@ public class TestDatabaseDao
 		
 		User u = (User) session.get(User.class, 2);
 		Zdjecie z = new Zdjecie();
-		z.setZdjecie(new File("test.txt"));
+		//z.setZdjecie(new File("test.txt"));
 		session.save(z);
 		
 		ProduktyKupTeraz p = new ProduktyKupTeraz("pierwszy produkt", "taki sobie tma pridkut", 
@@ -54,16 +54,25 @@ public class TestDatabaseDao
 		
 		session.save(p);
 		ProduktyLicytuj p1 = new ProduktyLicytuj("drugi produkt", "dfrugii grudii taki sobie tma pridkut", 
-				12.0, new Date(), k, z, u);
+				12.0, new Date(), k, z, u, new Date());
 		
 		Collection<Zdjecie> zdj = new ArrayList<Zdjecie>();
 		zdj.add(z);
 		p1.setZdjecia(zdj);
 		
+		Produkty prod = (Produkty) session.get(Produkty.class, 1);
+		if(prod instanceof ProduktyKupTeraz)
+		{
+			System.out.println("jestem kup teraz");
+			ProduktyKupTeraz pk = (ProduktyKupTeraz) prod;
+			System.out.println(pk.isKupiony());
+		}
+		if(prod instanceof ProduktyLicytuj)
+		{
+			System.out.println("jestem licytuj");
+		}		
 		session.save(p1);		
-		
-		
-		
+
 	}
 	
 }

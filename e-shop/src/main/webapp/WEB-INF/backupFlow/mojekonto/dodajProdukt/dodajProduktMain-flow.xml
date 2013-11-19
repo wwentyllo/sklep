@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+
+	<var name='produkt' class="com.cebul.jez.entity.Produkty" />
+	<var name='produktLicytuj' class="com.cebul.jez.entity.ProduktyLicytuj" />
+	<var name='produktKupTeraz' class="com.cebul.jez.entity.ProduktyKupTeraz" />
+	<var name='f' class="com.cebul.jez.flows.FlowDodajProduktForm" />
+	
+	<decision-state id="isUserLogged">
+		<if test="flowDodajProdukt.sprawdzUsera()" then="kupCzyLicytujView" else="unlogin" />
+	</decision-state>
+	
+	<view-state id="kupCzyLicytujView" model="f">
+		<transition on='kupCzyLicytDecyzja' to="kupCzyLicytuj"></transition>
+	</view-state>
+	
+	<decision-state id="kupCzyLicytuj">
+		<if test="f.getDecyzja() == 'kup' " then="subflowKupTeraz" else="subflowLicytuj" />
+	</decision-state>
+	
+	<subflow-state id="subflowKupTeraz" subflow="mojekonto/dodajProdukt/subflowFirstStep">
+		<input name="f"/>
+		<output name="produktKupTeraz" value="produktKupTeraz" />
+		<transition to="saveProduktK"></transition>
+	</subflow-state>	
+	
+	<subflow-state id="subflowLicytuj" subflow="dodajProdukt/firstStep">
+		<output name="produktLicytuj" value="produktKupTeraz" />
+	</subflow-state>	
+	
+	<action-state id="saveProduktK">
+		<evaluate expression="flowDodajProdukt.saveProduktK(produktKupTeraz)"></evaluate>
+		<transition to="endState"></transition>
+	</action-state>
+	
+	
+	
+	
+	<view-state id="unlogin" ></view-state>
+	
+	<end-state id="endState"></end-state>
+	
+    <global-transitions>
+    	<transition on='cancel' to="endState"></transition>
+    </global-transitions>                   
+</flow>

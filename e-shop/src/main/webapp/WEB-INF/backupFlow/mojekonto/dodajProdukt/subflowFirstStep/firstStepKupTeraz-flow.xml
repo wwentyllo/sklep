@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+<var name='produktKupTeraz' class="com.cebul.jez.entity.ProduktyKupTeraz" />
+<input name="f" required="true"/>
+
+<view-state id="startViewKupTeraz" model="produktKupTeraz">
+		<on-entry>
+			<evaluate expression="flowDodajProdukt.getMainKategory()" result="f.katDodaj"></evaluate>
+		</on-entry>
+		<transition on="firstStep" to="uzupelnijDate"></transition>
+</view-state>
+
+	<action-state id="uzupelnijDate">
+		<evaluate result="produktKupTeraz.dataDodania" expression="flowDodajProdukt.getCurrDate()" />
+		<transition  to="uzupelnijUsera" />
+	</action-state>
+	
+	<action-state id="uzupelnijUsera">
+		<evaluate result="produktKupTeraz.user" expression="flowDodajProdukt.getUser()" />
+		<transition  to="ready" />
+	</action-state>
+	
+	<end-state id="ready">
+		<output name="produktKupTeraz"/>
+	</end-state>
+	
+	
+
+
+</flow>

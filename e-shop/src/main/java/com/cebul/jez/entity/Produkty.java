@@ -1,5 +1,6 @@
 package com.cebul.jez.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -17,12 +18,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Produkty")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Produkty {
+public class Produkty implements Serializable{
 	
 	@Id
 	@GeneratedValue
@@ -30,30 +34,31 @@ public class Produkty {
 	private Integer id;
 	
 	@Column(name="Nazwa")
-	@NotNull
+	@Size(min=3, max=20, message="Nazwa produktu musi składać się z od 3 do 20 znaków.")
 	private String nazwa;
 	
 	@Column(name="Opis", columnDefinition="TEXT")
-	@NotNull
+	@NotNull(message="Opis produktu nie moze byc pusty")
 	private String opis;
 	
 	@Column(name="Cena")
-	@NotNull
+	@NotNull(message="Cena produltu nie moze byc pusta")
+	@Min(value=1, message="Minimalna cena musi być równa 1 zł")
 	private Double cena;
 	
 	@Column(name="DataDodania")
 	@NotNull
 	private Date dataDodania;
 	
-	@OneToOne(fetch=FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="IdKat")
 	private Kategoria kategorie;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="IdZdjGlow")
 	private Zdjecie zdjecie;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="IdWlas")
 	private User user;
 
@@ -70,7 +75,9 @@ public class Produkty {
 	}
 	public Produkty()
 	{
-		
+		this.kategorie = new Kategoria();
+		this.dataDodania = new Date();
+		//this.kategorie.setId(1);
 	}
 	public Produkty(String nazwa, String opis, Double cena, Date data, Kategoria kategoria,
 			Zdjecie zdjecie, User user)
@@ -82,6 +89,7 @@ public class Produkty {
 		this.kategorie = kategoria;
 		this.zdjecie = zdjecie;
 		this.user = user;
+		this.dataDodania = new Date();
 	}
 	public Kategoria getKategorie() {
 		return kategorie;

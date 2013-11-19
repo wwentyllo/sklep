@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.hibernate.mapping.Array;
 
+import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 
 public class JsonObject 
@@ -24,5 +25,6 @@ public class JsonObject
 		int size = p.size();
 		produkty = p.toArray(new String[size]);
 	}
+	
 	
 }

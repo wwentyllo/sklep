@@ -11,6 +11,7 @@ import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.entity.User;
@@ -50,4 +51,27 @@ public class ProduktyDao extends Dao
 		//System.out.println(result.get(0).getNazwa());
 		return result;
 	}
+	public Produkty getProdukt(Integer id)
+	{
+		Produkty p = new Produkty();
+		Session session = getSessionFactory();
+		p = (Produkty) session.get(Produkty.class, id);
+		return p;
+		
+	}
+	public boolean saveProduktKupTeraz(ProduktyKupTeraz p)
+	{
+		try{
+			System.out.println("idik: "+p.getKategorie().getId());
+			Session session = getSessionFactory();
+			Kategoria kat = (Kategoria) session.get(Kategoria.class, p.getKategorie().getId());
+			p.setKategorie(kat);
+			session.saveOrUpdate(p);
+		}catch(Exception e)
+		{
+			return false;
+		}
+		return true;
+	}
+	
 }

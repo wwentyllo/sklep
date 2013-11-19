@@ -1,5 +1,6 @@
 package com.cebul.jez.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,39 +14,29 @@ import javax.persistence.Table;
 @Entity
 @Table(name="ProduktyKupTeraz")
 @PrimaryKeyJoinColumn(name="Id")
-public class ProduktyKupTeraz extends Produkty
+public class ProduktyKupTeraz extends Produkty implements Serializable
 {
-	
-	@Column(name="DataKupna")
-	private Date dataKupna;
-	
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="IdKupca")
-	private User kupiec;
+
+	@Column(name="Kupiony")
+	private boolean kupiony;
 	
 	public ProduktyKupTeraz() {
-		
+		super();
+		this.kupiony = false;
 	}
 	public ProduktyKupTeraz(String nazwa, String opis, Double cena, Date data, Kategoria kategoria,
 			Zdjecie zdjecie, User user)
 	{
 		super(nazwa, opis, cena, data, kategoria, zdjecie, user);
-		this.dataKupna = null;
-		this.kupiec = null;
+		this.kupiony = false;
 	}
-	public User getKupiec() {
-		return kupiec;
+	public boolean isKupiony() {
+		return kupiony;
 	}
-	public void setKupiec(User kupiec) {
-		this.kupiec = kupiec;
+	public void setKupiony(boolean kupiony) {
+		this.kupiony = kupiony;
 	}
-	public Date getDataKupna() {
-		return dataKupna;
-	}
-	public void setDataKupna(Date dataKupna) {
-		this.dataKupna = dataKupna;
-	}
-	
+
 	
 	
 }

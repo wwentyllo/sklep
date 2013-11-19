@@ -129,12 +129,12 @@
 						</form>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px;">
-								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
+								<a href="<c:url value='/mojekonto/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">MOJE KONTO</a>
 							</div>
 						</td>
 						<td>
 							<div style="border-left: 1px solid black; padding-left: 10px; ">
-								<a href="<c:url value='/koszyk' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
+								<a href="<c:url value='/koszyk/' />" style="font-weight:bold; font-size: 16px;;text-decoration: none; border: none; color: black;">KOSZYK</a>
 							</div>
 						</td>
 						
@@ -157,7 +157,7 @@
 		</div>
 		<div id='bottom'>
 			<span align="center" style="color: #578921; display: block;"><b>Copyright Ⓒ Cebul & Jeżyk</b></span>
-			<span onclick="alert(this.id);" class="test">hsadkjsahkdsa</span>
+			
 		</div>
 	</div>
 	<div id='podpowiedzi' >

@@ -1,6 +1,7 @@
 package com.cebul.jez.entity;
 
 import java.io.File;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,8 @@ public class Zdjecie
 	@Column(name="Id")
 	private Integer id;
 	
-	@Column(name="Zdjecie", columnDefinition="BLOB")
-	private File zdjecie;
+	@Column(name="Zdjecie", columnDefinition="LONGBLOB")
+	private byte[] zdjecie;
 	
 	public Integer getId() {
 		return id;
@@ -28,13 +29,24 @@ public class Zdjecie
 		this.id = id;
 	}
 
-	public File getZdjecie() {
+	public byte[] getZdjecie() {
 		return zdjecie;
 	}
 
-	public void setZdjecie(File zdjecie) {
+	public void setZdjecie(byte[] zdjecie) {
 		this.zdjecie = zdjecie;
 	}
+
+	
+	/*
+	public Blob getZdjecie() {
+		return zdjecie;
+	}
+
+	public void setZdjecie(Blob zdjecie) {
+		this.zdjecie = zdjecie;
+	}
+	*/
 	
 	
 }

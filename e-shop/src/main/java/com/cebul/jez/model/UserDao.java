@@ -59,7 +59,17 @@ public class UserDao extends Dao
 		Query query = session.createSQLQuery("SELECT * FROM users WHERE login = :username ").
 				addEntity(User.class).setParameter("username", login);
 		List<User> result = query.list();
+		if(result.size() == 0)
+			return null;
+		
 		return result.get(0);
+	}
+	public User getUser(Integer id)
+	{
+		Session session = getSessionFactory();
+		User u = (User) session.get(User.class, id);
+		System.out.println("test w dao "+u.getLogin());
+		return u;
 	}
 	public boolean isUserExsist(String login)
 	{

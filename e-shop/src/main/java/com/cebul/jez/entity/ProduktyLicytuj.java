@@ -1,5 +1,6 @@
 package com.cebul.jez.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,26 +15,23 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="ProduktyLicytuj")
 @PrimaryKeyJoinColumn(name="Id")
-public class ProduktyLicytuj extends Produkty
+public class ProduktyLicytuj extends Produkty implements Serializable
 {
 	@Column(name="DataZakonczenia")
 	@NotNull
 	private Date dataZakonczenia;
 	
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="IdNabywcy")
-	private User nabywca;
 
 	public ProduktyLicytuj()
 	{
-		
+		super();
 	}
 	public ProduktyLicytuj(String nazwa, String opis, Double cena, Date data, Kategoria kategoria,
-			Zdjecie zdjecie, User user)
+			Zdjecie zdjecie, User user, Date dataZakonczenia)
 	{
 		super(nazwa, opis, cena, data, kategoria, zdjecie, user);
-		this.dataZakonczenia = new Date();
-		this.nabywca = null;
+		this.dataZakonczenia = dataZakonczenia;
+		
 	}
 	
 	public Date getDataZakonczenia() {
@@ -44,13 +42,7 @@ public class ProduktyLicytuj extends Produkty
 		this.dataZakonczenia = dataZakonczenia;
 	}
 
-	public User getNabywca() {
-		return nabywca;
-	}
-
-	public void setNabywca(User nabywca) {
-		this.nabywca = nabywca;
-	}
+	
 	
 	
 	

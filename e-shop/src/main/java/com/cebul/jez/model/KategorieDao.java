@@ -35,7 +35,7 @@ public class KategorieDao
 		return result;
 		
 	}
-	public List<Kategoria> getPodKategory(String parent)
+	public List<Kategoria> getPodKategory(Integer parent)
 	{
 		
 		Session session = getSessionFactory();
@@ -43,6 +43,7 @@ public class KategorieDao
 				addEntity(Kategoria.class).setParameter("parent", parent);
 			
 		List<Kategoria> result = query.list();
+	
 		return result;
 	}
 	

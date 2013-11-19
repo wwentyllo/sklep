@@ -46,4 +46,9 @@ public class UserService
 	{
 		return userDao.isUserExsist(login);
 	}
+	@Transactional
+	public User getUser(Integer id)
+	{
+		return userDao.getUser(id);
+	}
 }
