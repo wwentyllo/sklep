@@ -38,4 +38,9 @@ public class ProduktyService
 	{
 		return produktyDao.getProdukt(id);
 	}
+	@Transactional
+	public boolean updateProdukt(Produkty p)
+	{
+		return produktyDao.updateProdukt(p);
+	}
 }

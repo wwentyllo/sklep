@@ -165,23 +165,31 @@
 			</form>
 		</div>
 		<div id='main'>
-			<div id='main-right' style="width: 1000px;">
-				<table>
+			<div id='main-right' style="width: 1000px;" align='center'>
+			<p style="font-size: 16pt; margin-top: 30px; color: #8AC74A;" ><b>Wbybierz zdjecie produktu: </b></p>
+				<table class='casualTab' style='margin-top: 30px;'>
 					<sf:form enctype="multipart/form-data" action="/jez/mojekonto/dodajProdukt/dodajZdjecie">
 						<tr>
-							<td>Plik: </td>
+							<td style="font-weight: bold;">Plik: </td>
 							<td>
-						
-								<input name="image" type="file" />
+								<input  name="image" type="file" />
 							</td>
-						</tr>					
+						</tr>
+						<tr>
+							<td style="font-weight: bold;">Zdjęcie główne? </td>
+							<td>
+								<input style='width: 30px; margin-left: 70px;' type="checkbox" name="mainImage" value="main" />	TAK
+							</td>
+						</tr>						
 						<tr>
 							<td cols="2"><input class="sub" style='margin: 0px;' type="submit" value="Dodaj Produkt" /></td>
 						</tr>
 						
 					</sf:form>
 				</table>
-				<a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >Zakończ dodawanie zdjęć</a>
+				</br>
+				</br>
+				<a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >  >>> Zakończ dodawanie zdjęć <<< </a>
 			</div>
 		</div>
 		<div id='bottom'>

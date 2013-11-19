@@ -81,7 +81,7 @@
 		<div id='main-cenetr' align='center'>
 			<div id="box" align="center" style="padding-top: 50px;">
 			<div align="center" style="background-color: #FFCCCC; border: 5px solid red; width: 300px; padding: 20px;margin: 0 auto;;">
-				<span style="color: red;">Podałeś źły <b>login</b> lub <b>hasło</b>. Wprowadź poprawne dane i spróbuj jeszcze raz.</span>
+				<span style="color: red;">Podałeś zły <b>login</b> lub <b>hasło</b>. Wprowadź poprawne dane i spróbuj jeszcze raz. (Twoje konto mogło jeszcze nie zostać aktywowane. W celu aktywacji sprawdź pocztę)</span>
 			</div>
 			<table style="margin: 0 auto;" id="tabLog">
 			<form method="POST" action="j_spring_security_check" name="f">

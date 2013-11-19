@@ -154,6 +154,10 @@ public class Produkty implements Serializable{
 	public void setDataDodania(Date dataDodania) {
 		this.dataDodania = dataDodania;
 	}
+	public void addZdjecie(Zdjecie zdj)
+	{
+		this.zdjecia.add(zdj);
+	}
 	
 	
 	

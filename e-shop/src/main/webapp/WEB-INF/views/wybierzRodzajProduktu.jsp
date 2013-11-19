@@ -137,20 +137,20 @@ function doAjaxPost()
 			</form>
 		</div><div id='main'>
 		<div id='main-cenetr' align='center'>
-				
-		<p>Wybierz rodzaj produktu jaki chcesz dodać: </p>
+			</br></br></br>	
+		<p style="font-size: 16pt; color: #8AC74A;" ><b>Wybierz rodzaj produktu jaki chcesz dodać: </b></p>
 		
 		<sf:form method="POST" action="/jez/mojekonto/dodajProdukt/wybierzRodzajProd">
 			<fieldset style='border: none;'>
-			<table>
+			<table class='casualTab'>
 			<tr>
-				<td> <label>Produkt Kup Teraz</label> </td>
+				<td> <label><b><i>Produkt Kup Teraz</i></b></label> </td>
 				<td>
 					<input style='width: 50px;' type="radio" name='wyborProd' value="KupTeraz" checked="checked" />
 				</td>	
 			</tr>
 			<tr>
-				<td> <label>Produkt Licytuj</label> </td>
+				<td> <label><b><i>Produkt Licytuj</i></b></label> </td>
 				<td>
 				
 					<input style='width: 50px;' type="radio" name='wyborProd' value="Licytuj" />
@@ -158,13 +158,13 @@ function doAjaxPost()
 			</tr>
 			<tr>
 				<td cols="2" align='center'>
-					<input class="sub" style='margin: 0px;' type="submit" value="Kolejny krok" /> 
+					<input class="sub" style='margin-left: 50px;' type="submit" value="Kolejny krok" /> 
 				</td>
 			</tr>
 			</table>
 			</fieldset>
 		</sf:form>
-	<a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >Zakończ dodawanie zdjęć</a>
+	<a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >  >>>Zakończ dodawanie produktu <<< </a>
 	</div>
 </div>
 </body>

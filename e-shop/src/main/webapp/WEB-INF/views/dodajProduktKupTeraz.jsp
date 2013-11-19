@@ -165,11 +165,12 @@
 			</form>
 		</div>
 		<div id='main'>
-			<div id='main-right' style="width: 1000px;">
-				<table>
+			<div id='main-right' style="width: 1000px;" align='center'>
+			<p style="font-size: 16pt; margin-top: 30px; color: #8AC74A;" ><b>Uzupełnij informacje o produkcie: </b></p>
+				<table class='casualTab' style='margin-top: 30px;'>
 					<sf:form modelAttribute="produkt" action="/jez/mojekonto/dodajProdukt/dodajKupTeraz">
 						<tr>
-							<td>Nazwa: </td>
+							<td style="font-weight: bold;" >Nazwa: </td>
 							<td>
 						
 								<sf:input name="nazwa" id="nazwa" path="nazwa" />
@@ -177,15 +178,15 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Opis:</td>
+							<td style="font-weight: bold;">Opis:</td>
 							<td>
-								<sf:textarea cols="20" rows="8" id="opis" name='opis' path="opis"/>
+								<sf:textarea cols="22" rows="8" id="opis" name='opis' path="opis"/>
 								<sf:errors  path="opis" cssClass="error" />
 							</td>
 							
 						</tr>
 						<tr>
-							<td>Cena:</td>
+							<td style="font-weight: bold;">Cena:</td>
 							<td>
 								<sf:input name="cena" id="cena" path="cena" />
 								<sf:errors  path="cena" cssClass="error" />
@@ -193,11 +194,11 @@
 						</tr>
 						
 						<tr>
-							<td>
-								Kategoria główna
+							<td style="font-weight: bold;">
+								Kategoria główna:
 							</td>
 							<td>
-								<select onchange='ladujPodkategorie();' name='kategoria' id='kategoria' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
+								<select onchange='ladujPodkategorie();' name='kategoria' id='kategoria' style="height: 35px; width: 200px; margin-top: 5px; background-color: #EDEDED;">
 										<option value="0">WYBIERZ KATEGORIE
 										</option>
 										<c:forEach items="${kategoryList}" var="element"> 
@@ -210,22 +211,24 @@
 							</td>	
 						</tr>
 						<tr>
-							<td>
-								PodKategoria
+							<td style="font-weight: bold;">
+								Podkategoria:
 							</td>
 							<td>
-								<sf:select  name='podkategoria' id='podkategoria' path='kategorie.id' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
+								<sf:select  name='podkategoria' id='podkategoria' path='kategorie.id' style="height: 35px; width: 200px; margin-top: 5px; background-color: #EDEDED;">
 										<option value="0">WYBIERZ PODKATEGORIE
 										</option>
 								</sf:select>
 							</td>	
 						</tr>
 						<tr>
-							<td cols="2"><input class="sub" style='margin: 0px;' type="submit" value="Dodaj Produkt" /></td>
+							<td colspan="2" align='center'><input class="sub" style='margin: 0px;' type="submit" value="Dodaj Produkt" /></td>
 						</tr>
 						
 					</sf:form>
 				</table>
+				</br>
+				<a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >  >>>Zakończ dodawanie produktu <<< </a>
 			</div>
 		</div>
 		<div id='bottom'>

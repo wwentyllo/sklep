@@ -62,10 +62,20 @@ public class ProduktyDao extends Dao
 	public boolean saveProduktKupTeraz(ProduktyKupTeraz p)
 	{
 		try{
-			System.out.println("idik: "+p.getKategorie().getId());
 			Session session = getSessionFactory();
 			Kategoria kat = (Kategoria) session.get(Kategoria.class, p.getKategorie().getId());
 			p.setKategorie(kat);
+			session.saveOrUpdate(p);
+		}catch(Exception e)
+		{
+			return false;
+		}
+		return true;
+	}
+	public boolean updateProdukt(Produkty p)
+	{
+		try{
+			Session session = getSessionFactory();
 			session.saveOrUpdate(p);
 		}catch(Exception e)
 		{

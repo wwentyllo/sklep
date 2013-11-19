@@ -116,6 +116,7 @@ public class MojeKontoController
 			return "/mojekonto/dodajProdukt/";
 		}
 		session.setAttribute("prod", pk);
+		session.setAttribute("firstAdd", "yes");
 		return "dodajZdjecie";
 	}
 	@ResponseBody
@@ -132,7 +133,8 @@ public class MojeKontoController
 	    }
 	}
 	@RequestMapping(value = "/mojekonto/dodajProdukt/dodajZdjecie", method=RequestMethod.POST)
-	public String dodajZdjecie(@RequestParam(value="image", required=false) MultipartFile image, Model model,  HttpSession session, HttpServletRequest request) throws Exception
+	public String dodajZdjecie(@RequestParam(value="image", required=false) MultipartFile image, 
+			@RequestParam(value="mainImage", required=false) String mainImage, Model model,  HttpSession session, HttpServletRequest request) throws Exception
 	{
 		
 		if(session.getAttribute("prod") != null)
@@ -144,16 +146,22 @@ public class MojeKontoController
 					validateImage(image);
 					//saveImage(image);
 					//saveImageOnHardDrive(image, "H:\\");
-					
-					returnImage(image);
+					Zdjecie z = returnImage(image);
+					p.addZdjecie(z);
+					if(session.getAttribute("firstAdd") != null || mainImage.equals("main") )
+					{
+						session.removeAttribute("firstAdd");
+						p.setZdjecie(z);
+					}
+					produktyService.updateProdukt(p);
 					
 				}
 			}catch(Exception e){
-				System.out.println("przed dodaniem sie wykladam");
-				//System.out.println(e.getMessage());
-				return "dodajZdjecie";
+					System.out.println("przed dodaniem sie wykladam");
+					//System.out.println(e.getMessage());
+					return "dodajZdjecie";
 			}
-			
+				
 			return "dodajZdjecie";
 		}
 		return "redirect:/mojekonto/";
@@ -196,7 +204,7 @@ public class MojeKontoController
 		try{
 			byte[] bFile  = image.getBytes();
 			zdj.setZdjecie(bFile);
-			zdjecieService.saveZdjecie(zdj);
+			//zdjecieService.saveZdjecie(zdj);
 		}catch(Exception e)
 		{
 			System.out.println(e.getMessage());

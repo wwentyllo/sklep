@@ -127,5 +127,9 @@ body{
 .zakoncz:hover
 {
 	text-decoration: underline;
-	color: 	#red;
+	color: 	red;
+}
+.casualTab td
+{
+	padding: 5px;
 }
