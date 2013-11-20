@@ -65,6 +65,7 @@ public class HomeController {
 		
 		//serv.test1();
 		
+		//System.out.println(new Date().after(new Date()));
 		
 		List<Kategoria> kat = kategorieService.getMainKategory();
 		//model.addAttribute("kategoryList", kat);

@@ -13,6 +13,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 </head>
 <body>
 <div id='contener'>
@@ -34,10 +35,7 @@
 			</div>
 			
 			<div id="top-right">
-				<div>
-					<a style='margin-top: 40px;' href='<c:url value='/logowanie' />'>Zaloguj</a>
-					<a href='<c:url value='/rejestracja' />'>Rejestracja</a>
-				</div>
+				
 			</div>
 		</div>
 		<div id='searchDiv'>

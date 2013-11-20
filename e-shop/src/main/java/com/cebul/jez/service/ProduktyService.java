@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
+import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.model.ProduktyDao;
 
 
@@ -42,5 +43,10 @@ public class ProduktyService
 	public boolean updateProdukt(Produkty p)
 	{
 		return produktyDao.updateProdukt(p);
+	}
+	@Transactional
+	public boolean saveProduktLicytuj(ProduktyLicytuj p)
+	{
+		return produktyDao.saveProduktLicytuj(p);
 	}
 }

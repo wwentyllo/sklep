@@ -13,58 +13,9 @@
 <link href="${pageContext.request.contextPath}/resources/css/index.css"
 	type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
 
-	function searchFocus()
-	{
-		if($('#szukanaFraza').val() == "Wpisz czego szuaksz...")
-			$('#szukanaFraza').val("");
-	}
-	function searchFocusOut()
-	{
-		$('#szukanaFraza').val("Wpisz czego szuaksz...");
-	}
-	function showPodkategorie()
-	{
-		
-	}
-	function selectPodpowiedz()
-	{
-		alert("sdada");
-	}
-	function sprawdzSlowo()
-	{
-		var ob = $('#szukanaFraza');
-		var p = ob.position();
-		var left = p.left+10;
-		var top = p.top + 37;
-		$.getJSON( "/jez/szukaj/szukaj.json", {"slowo": $('#szukanaFraza').val()})
-		.done(function( json ) {
-		    
-		    var resp = "<ul>";
-		    $.each(json.produkty, function( index, value ) {
-		    	//alert( index + ": " + value );
-		    	resp += '<li  id="li'+index+'" class="test" value="test1">'+value+'</li>';
-		    	});
-		    resp += "</ul>";
-		    
-		    $('#podpowiedzi').css("top", top).css("left", left).css("display", "block");
-		    $('#podpowiedzi').html(resp);
-		    
-		   $('.test').on("mousedown",function(){ 
-			   var ident = "#"+this.id;
-			   $('#szukanaFraza').val($(ident).html());
-		});
-		    
-		  })
-		 .fail(function( jqxhr, textStatus, error ) {
-		   //alert("error="+error);
-		 }); 	
-	}
-	function ukryjPodpowiedzi()
-	{
-		 $('#podpowiedzi').css("display", "none");
-	}
 </script>
 </head>
 <body>
@@ -91,11 +42,11 @@
 					<c:choose>
 						<c:when test="${!empty sessionScope.sessionUser}">
 							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: red; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
-							  	<a href="<c:url value="j_spring_security_logout" />"> wyloguj</a>
+							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
 						</c:when>
 	  					<c:otherwise>
-	  							<a style='margin-top: 40px;' href='<c:url value='/logowanie' />'>Zaloguj</a>
-								<a href='<c:url value='/rejestracja' />'>Rejestracja</a>
+	  							<a style='margin-top: 40px;' href='/jez/logowanie'>Zaloguj</a>
+								<a href='/jez/rejestracja'>Rejestracja</a>
 	  					</c:otherwise>
   					</c:choose>
 					

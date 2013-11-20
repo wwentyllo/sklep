@@ -13,6 +13,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 </head>
 <body>
 <div id='contener'>

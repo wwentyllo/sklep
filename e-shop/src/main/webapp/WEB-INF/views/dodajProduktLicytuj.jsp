@@ -34,8 +34,37 @@
 			 .fail(function( jqxhr, textStatus, error ) {
 			   //alert("error="+error);
 			 }); 
+	}
+	function sprawdzDate()
+	{
+		var str = $('#dataZakonczenia').val();
+		var m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+
+		if(m != null)
+		{
+			var lol =  (m) ? new Date(m[1], m[2]-1, m[3]) : null;
+			
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			
+			var dd2 = lol.getDate();
+			var mm2= lol.getMonth()+1; //January is 0!
+			var yyyy2 = lol.getFullYear();
+			
+			if(yyyy2 > yyyy || (yyyy2 == yyyy && mm2 > mm) || (yyyy2 == yyyy && mm2 == mm && dd2 > dd) )
+			{
+				//alert("yupiiiiii");
+				return true;
+			}
+			
+			alert("data zakończenia nie może byc mniejsza od aktualnej daty.");
+		}else{
+			alert("Wprowadzona przez Ciebie data jest nie poprawna");
+		}
 		
-		
+		return false;
 	}
 </script>
 </head>
@@ -126,7 +155,7 @@
 				<div style='margin-left: 150px;'>
 					<p style="font-size: 16pt; color: #8AC74A;" ><b>Uzupełnij informacje o produkcie: </b></p>
 					<table class='casualTab' style='margin-top: 30px;'>
-						<sf:form modelAttribute="produkt" action="/jez/mojekonto/dodajProdukt/dodajKupTeraz">
+						<sf:form onsubmit="return sprawdzDate();" modelAttribute="produkt" action="/jez/mojekonto/dodajProdukt/dodajLicytuj">
 							<tr>
 								<td style="font-weight: bold;" >Nazwa: </td>
 								<td>
@@ -180,7 +209,14 @@
 								</td>	
 							</tr>
 							<tr>
-								<td colspan="2" align='center'><input class="sub" style='margin: 0px;' type="submit" value="Dodaj Produkt" /></td>
+								<td style="font-weight: bold;">Data zakonczenia:</td>
+								<td>
+									<sf:input onchange="sprawdzDate();" name="dataZakonczenia" id="dataZakonczenia" path="dataZakonczenia" />
+									<sf:errors  path="dataZakonczenia" cssClass="error" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" align='center'><input  class="sub" style='margin: 0px;' type="submit" value="Dodaj Produkt" /></td>
 							</tr>
 							
 						</sf:form>

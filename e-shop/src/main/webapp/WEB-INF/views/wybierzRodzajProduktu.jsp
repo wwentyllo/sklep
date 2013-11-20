@@ -13,6 +13,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
 function month()
 {
@@ -92,10 +93,18 @@ function doAjaxPost()
 			</div>
 			
 			<div id="top-right">
-				${sessionScope.test}
 				<div>
-					<a style='margin-top: 40px;' href='<c:url value='/logowanie' />'>Zaloguj</a>
-					<a href='<c:url value='/rejestracja' />'>Rejestracja</a>
+					<c:choose>
+						<c:when test="${!empty sessionScope.sessionUser}">
+							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: red; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
+							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
+						</c:when>
+	  					<c:otherwise>
+	  							<a style='margin-top: 40px;' href='/jez/logowanie'>Zaloguj</a>
+								<a href='/jez/rejestracja'>Rejestracja</a>
+	  					</c:otherwise>
+  					</c:choose>
+					
 				</div>
 			</div>
 		</div>
@@ -136,8 +145,14 @@ function doAjaxPost()
 				</table>
 			</form>
 		</div><div id='main'>
-		<div id='main-cenetr' align='center'>
-			</br></br></br>	
+		<div id='main-left'>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/dodajProdukt' />">Dodaj Produkt</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneProdukty' />">Wystawione Produkty</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/sprzedaneProdukty' />">Sprzedane Produkty</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/modyfikujKonto' />">Modyfikuj kontot</a>
+								
+		</div>
+		<div id='main-right' align='center'>
 		<p style="font-size: 16pt; color: #8AC74A;" ><b>Wybierz rodzaj produktu jaki chcesz dodać: </b></p>
 		
 		<sf:form method="POST" action="/jez/mojekonto/dodajProdukt/wybierzRodzajProd">

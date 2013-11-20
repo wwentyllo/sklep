@@ -14,79 +14,9 @@
 	type="text/css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
+<script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
 
-	function searchFocus()
-	{
-		if($('#szukanaFraza').val() == "Wpisz czego szuaksz...")
-			$('#szukanaFraza').val("");
-	}
-	function searchFocusOut()
-	{
-		$('#szukanaFraza').val("Wpisz czego szuaksz...");
-	}
-	function showPodkategorie()
-	{
-		
-	}
-	function selectPodpowiedz()
-	{
-		alert("sdada");
-	}
-	function sprawdzSlowo()
-	{
-		var ob = $('#szukanaFraza');
-		var p = ob.position();
-		var left = p.left+10;
-		var top = p.top + 37;
-		$.getJSON( "/jez/szukaj/szukaj.json", {"slowo": $('#szukanaFraza').val()})
-		.done(function( json ) {
-		    
-		    var resp = "<ul>";
-		    $.each(json.produkty, function( index, value ) {
-		    	//alert( index + ": " + value );
-		    	resp += '<li  id="li'+index+'" class="test" value="test1">'+value+'</li>';
-		    	});
-		    resp += "</ul>";
-		    
-		    $('#podpowiedzi').css("top", top).css("left", left).css("display", "block");
-		    $('#podpowiedzi').html(resp);
-		    
-		   $('.test').on("mousedown",function(){ 
-			   var ident = "#"+this.id;
-			   $('#szukanaFraza').val($(ident).html());
-		});
-		    
-		  })
-		 .fail(function( jqxhr, textStatus, error ) {
-		   //alert("error="+error);
-		 }); 	
-	}
-	function ukryjPodpowiedzi()
-	{
-		 $('#podpowiedzi').css("display", "none");
-	}
-	function ladujPodkategorie()
-	{
-		var val = $('#kategoria').val();
-			
-		$.getJSON( "/jez/dodajProdukt/podkategorie.json", {"podkategory": parseInt(val)})
-			.done(function( json ) {
-			    
-			    var resp = "<option value='0'>WYBIERZ PODKATEGORIE</option>";
-			    $.each(json.kategorie, function( index, value ) {
-			     	resp += '<option value="'+value.id+'">'+value.nazwa+'</option>';
-			    	});
-			    
-			    $('#podkategoria').html(resp);
-			    
-			  })
-			 .fail(function( jqxhr, textStatus, error ) {
-			   //alert("error="+error);
-			 }); 
-		
-		
-	}
 </script>
 </head>
 <body>
@@ -113,11 +43,11 @@
 					<c:choose>
 						<c:when test="${!empty sessionScope.sessionUser}">
 							  	<span style='display: block; margin-top: 20px; margin-left: 120px;'>Witaj: <span style='color: red; font-size: 18px;'>${sessionScope.sessionUser.getLogin()}</span></span>
-							  	<a href="<c:url value="j_spring_security_logout" />"> wyloguj</a>
+							  	<a href="/jez/j_spring_security_logout"> wyloguj</a>
 						</c:when>
 	  					<c:otherwise>
-	  							<a style='margin-top: 40px;' href='<c:url value='/logowanie' />'>Zaloguj</a>
-								<a href='<c:url value='/rejestracja' />'>Rejestracja</a>
+	  							<a style='margin-top: 40px;' href='/jez/logowanie'>Zaloguj</a>
+								<a href='/jez/rejestracja'>Rejestracja</a>
 	  					</c:otherwise>
   					</c:choose>
 					
@@ -165,31 +95,40 @@
 			</form>
 		</div>
 		<div id='main'>
-			<div id='main-right' style="width: 1000px;" align='center'>
-			<p style="font-size: 16pt; margin-top: 30px; color: #8AC74A;" ><b>Wbybierz zdjecie produktu: </b></p>
-				<table class='casualTab' style='margin-top: 30px;'>
-					<sf:form enctype="multipart/form-data" action="/jez/mojekonto/dodajProdukt/dodajZdjecie">
-						<tr>
-							<td style="font-weight: bold;">Plik: </td>
-							<td>
-								<input  name="image" type="file" />
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold;">Zdjęcie główne? </td>
-							<td>
-								<input style='width: 30px; margin-left: 70px;' type="checkbox" name="mainImage" value="main" />	TAK
-							</td>
-						</tr>						
-						<tr>
-							<td cols="2"><input class="sub" style='margin: 0px;' type="submit" value="Dodaj Produkt" /></td>
-						</tr>
-						
-					</sf:form>
-				</table>
-				</br>
-				</br>
-				<a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >  >>> Zakończ dodawanie zdjęć <<< </a>
+		<div id='main-left'>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/dodajProdukt' />">Dodaj Produkt</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/wystawioneProdukty' />">Wystawione Produkty</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/sprzedaneProdukty' />">Sprzedane Produkty</a>
+				<a class="categorieLeft" href="<c:url value='/mojekonto/modyfikujKonto' />">Modyfikuj kontot</a>
+								
+		</div>
+			<div id='main-right' >
+			<div style='margin-left: 170px;'>
+				<p style="font-size: 16pt; margin-top: 30px; color: #8AC74A;" ><b>Wbybierz zdjecie produktu: </b></p>
+					<table class='casualTab' style='margin-top: 30px;'>
+						<sf:form enctype="multipart/form-data" action="/jez/mojekonto/dodajProdukt/dodajZdjecie">
+							<tr>
+								<td style="font-weight: bold;">Plik: </td>
+								<td>
+									<input  name="image" type="file" />
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold;">Zdjęcie główne? </td>
+								<td>
+									<input style='width: 30px; margin-left: 70px;' type="checkbox" name="mainImage" value="main" />	TAK
+								</td>
+							</tr>						
+							<tr>
+								<td cols="2"><input class="sub" style='margin: 0px;' type="submit" value="Dodaj Produkt" /></td>
+							</tr>
+							
+						</sf:form>
+					</table>
+					</br>
+					</br>
+					<a class="zakoncz" href="<c:url value='/mojekonto/dodajProdukt/zakoncz/' />" >  >>> Zakończ dodawanie zdjęć <<< </a>
+				</div>
 			</div>
 		</div>
 		<div id='bottom'>

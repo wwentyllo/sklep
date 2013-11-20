@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
+import com.cebul.jez.entity.ProduktyLicytuj;
 import com.cebul.jez.entity.User;
 
 @Repository
@@ -76,6 +77,19 @@ public class ProduktyDao extends Dao
 	{
 		try{
 			Session session = getSessionFactory();
+			session.saveOrUpdate(p);
+		}catch(Exception e)
+		{
+			return false;
+		}
+		return true;
+	}
+	public boolean saveProduktLicytuj(ProduktyLicytuj p)
+	{
+		try{
+			Session session = getSessionFactory();
+			Kategoria kat = (Kategoria) session.get(Kategoria.class, p.getKategorie().getId());
+			p.setKategorie(kat);
 			session.saveOrUpdate(p);
 		}catch(Exception e)
 		{

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +23,12 @@ import org.apache.tools.ant.util.FileUtils;
 import org.aspectj.util.FileUtil;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,7 +86,7 @@ public class MojeKontoController
 			//return "redirect:/mojekonto/dodajProdukt/generateFormKup";
 		}else if(wybor.equals("Licytuj"))
 		{
-			model.addAttribute(new ProduktyLicytuj());
+			model.addAttribute("produkt", new ProduktyLicytuj());
 			return "dodajProduktLicytuj";
 		}
 		return "redirect:/mojekonto/";
@@ -119,6 +123,39 @@ public class MojeKontoController
 		session.setAttribute("firstAdd", "yes");
 		return "dodajZdjecie";
 	}
+	@RequestMapping(value = "/mojekonto/dodajProdukt/dodajLicytuj", method=RequestMethod.POST)
+	public String addProduktForFormLicytuj(@Valid ProduktyLicytuj pl, BindingResult bindingResult, Model model,  HttpSession session, HttpServletRequest request) throws Exception
+	{
+		//pl.setDataZakonczenia(new Date());
+		if(bindingResult.hasErrors())
+		{
+			model.addAttribute("produkt", pl);
+			model.addAttribute(bindingResult);
+			bindingResult.reject("zleeeeee");
+			System.out.println(bindingResult.getAllErrors());
+			//model.addAttribute("produkt", new ProduktyKupTeraz());
+			//return "redirect:/mojekonto/dodajProdukt/generateFormKup";
+			return "dodajProduktLicytuj";
+		}
+		if(!pl.getDataZakonczenia().after(new Date()))
+		{
+			pl.setDataZakonczenia(null);
+			model.addAttribute("produkt", pl);
+			return "dodajProduktLicytuj";
+		}
+
+		User u = (User) session.getAttribute("sessionUser");
+		pl.setUser(u);
+		boolean itsDone = produktyService.saveProduktLicytuj(pl);
+		if(!itsDone)
+		{
+			return "/mojekonto/dodajProdukt/";
+		}
+		session.setAttribute("prod", pl);
+		session.setAttribute("firstAdd", "yes");
+		return "dodajZdjecie";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/images/{imageId}", method = RequestMethod.GET, produces="image/*")
 	public void getImage(@PathVariable Integer imageId, HttpServletResponse response) throws IOException {
@@ -217,4 +254,9 @@ public class MojeKontoController
 		session.removeAttribute("prod");
 		return "redirect:/mojekonto/";
 	}
+	@InitBinder
+    public void initBinder(WebDataBinder binder) {
+        CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
+        binder.registerCustomEditor(Date.class, editor);
+    }
 }
