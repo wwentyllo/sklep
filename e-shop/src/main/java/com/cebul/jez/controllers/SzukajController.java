@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
+import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.useful.JsonObject;
 
@@ -27,6 +29,9 @@ public class SzukajController
 {
 	@Autowired
 	private ProduktyService produktyService;
+	
+	@Autowired
+	private KategorieService kategorieService;
 	
 	@RequestMapping(value="/szukaj.json", method = RequestMethod.GET, params="slowo")
 	public @ResponseBody JsonObject znajdzWyszukiwarka(Model model, @RequestParam String slowo) 
@@ -41,11 +46,22 @@ public class SzukajController
 	public String znajdzWyszukiwarka(Model model, @RequestParam Integer szukanaKat, @RequestParam String szukanaFraza) 
 	{
 		List<Produkty> produkty;
+		List<Kategoria> podkategorie = new ArrayList<Kategoria>();
+		Boolean hasPodkategory = false;
 		
 		if(szukanaKat.equals(0))
+		{
 			produkty = produktyService.getFullProduktyLike(szukanaFraza);
+		}
 		else
+		{
 			produkty = produktyService.getFullProduktyLike(szukanaFraza, szukanaKat);
+			if(produkty.size() > 0)
+			{
+				podkategorie = kategorieService.getPodKategory(szukanaKat);
+				hasPodkategory = true;
+			}
+		}
 		//System.out.println(produkty.size());
 		
 		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
@@ -64,6 +80,10 @@ public class SzukajController
 		
 		model.addAttribute("szukaneProdukty", produkty);
 		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		model.addAttribute("podkategorie", podkategorie);
+		model.addAttribute("hasPodkategory", hasPodkategory);
+		//System.out.println(podkategorie.size());
+		
 		
 		return "szukaneProdukty";
 	}

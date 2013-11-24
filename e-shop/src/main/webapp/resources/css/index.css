@@ -139,3 +139,7 @@ body{
 	border: 0px;
 	color: black;
 }
+.greenSelect:hover
+{
+	background-color: #8AC74A;
+}

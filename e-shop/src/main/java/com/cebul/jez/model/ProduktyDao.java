@@ -1,6 +1,7 @@
 package com.cebul.jez.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.webflow.engine.History;
 
+import com.cebul.jez.entity.Hist_Wyszuk;
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
@@ -56,6 +59,15 @@ public class ProduktyDao extends Dao
 	{
 		String l = "%"+like+"%";
 		Session session = getSessionFactory();
+		
+		// wpisanie do tabeli Historia wyszukiwania
+		Kategoria k = (Kategoria) session.get(Kategoria.class, kategoria);
+		Hist_Wyszuk hw = new Hist_Wyszuk();
+		hw.setData(new Date());
+		hw.setKategoria(k);
+		session.save(hw);
+		//////
+		
 		Query query = session.createQuery("from Produkty p " +
 				"left join fetch p.kategorie as kat where " +
 				"kat.id IN (select k.id from Kategoria k left join k.parentKategory as parentK " +
@@ -73,6 +85,13 @@ public class ProduktyDao extends Dao
 	{
 		String l = "%"+like+"%";
 		Session session = getSessionFactory();
+		
+		// wpisanie do tabeli Historia wyszukiwania
+			Hist_Wyszuk hw = new Hist_Wyszuk();
+			hw.setData(new Date());
+			session.save(hw);
+		//////
+				
 		Query query = session.createQuery("from Produkty p " +
 				"WHERE p.nazwa LIKE :like " +
 				"and (p.id in (select i2.id from ProduktyKupTeraz i2 ) " +

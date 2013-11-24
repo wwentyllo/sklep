@@ -43,6 +43,14 @@ public class Hist_Wyszuk
 	public void setData(Date data) {
 		this.data = data;
 	}
+
+	public Kategoria getKategoria() {
+		return kategoria;
+	}
+
+	public void setKategoria(Kategoria kategoria) {
+		this.kategoria = kategoria;
+	}
 	
 	
 }

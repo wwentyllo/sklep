@@ -94,73 +94,46 @@
 			</form>
 		</div>
 		<div id='main'>
-			<div id='main-left'>
-			<c:forEach items="${podkategorie}" var="element"> 
-				<a href="<c:url value='/kategoria/${element.id}' />" class="categorieLeft" onmouseover="showPodkategorie()">
-					${element.nazwa}
-				</a>
-			</c:forEach>
-								
-			</div>
-			<div id='main-right' style='padding-left: 10px; padding-top: 10px;'>
-				<div  style='margin-left: 75px;'>
-					<span style="font-size: 12pt; display: block; color: gray; margin-bottom: 5px;">${path}</span>
-					
-						<div style='margin-right: 20px; margin-right: 10px; float: left; padding: 5px; border: 1px solid gray; width: 200px;'>
-								<c:choose>
-								<c:when test="${!empty produkt.zdjecie}">
-										<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/imag/${produkt.id}" />
-								</c:when>
-									<c:otherwise>
-										<img style="width: 200px; height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
-									</c:otherwise>
-								</c:choose>
-						</div>
-						
-						</br>
-						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Nazwa: </span> <span>${produkt.nazwa}</span></div>
-						</br>
-						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Cena: </span> <span>${produkt.cena} zł</span></div>
-						</br>
-						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Sprzedający:</span> <span>${produkt.user.login} zł</span></div>
-						</br>
-						<div style='padding: 3px;'>
-							
-								<c:choose>
-									<c:when test="${czyKupTeraz}">
-										<sf:form modelAttribute="produkt" action="/jez/produkty/addToCart/" method="POST">
-											<sf:input type="hidden" path="id" value="${produkt.id}" />
-											<input style="margin-left: 5px;" class="sub" type="submit" value="Kup teraz" />
-										</sf:form>
+			<div id='main-right' style='width: 980px; padding-left: 10px; padding-top: 10px;'>
+				<span style="display: block; margin: 10px; margin-bottom: 50px; font-size: 18pt; font-weight: bold;">Twój koszyk</span>
+				<div  style='border: 1px solid #F2FFE1 ;min-height:300px; width: 920px;  background-image: linear-gradient(#F2FFE1 0%, #FFFFFF 100%); -moz-border-radius: 30px; border-radius: 30px; padding: 30px;'>
+
+					<c:forEach items="${shoppingCart.items}" var="element" varStatus="status"> 
+						<a class="greenSelect" style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
+						<div  style=" width: 900px; border-bottom: 1px solid #DFDFDF; background-color: red;">
+							<div style="float:left;">
+							<c:choose>
+									<c:when test="${!empty element.zdjecie}">
+											<img style="width: 75px; " src="${pageContext.request.contextPath}/images/${element.id}" />
 									</c:when>
 									<c:otherwise>
-										<sf:form  modelAttribute="produkt" action="" method="POST">
-											<sf:input type="hidden" path="id" value="${produkt.id}" />
-											<input style="margin-left: 5px;" class="sub" type="submit" value="Licytuj" />
-										</sf:form>
+											<img style="width: 75px; " src="<c:url value='/resources/images/unknownItem.png' />" />
 									</c:otherwise>
-								</c:choose>
+							</c:choose>
+							</div>
+								<div style="width: 800px;">
+									<div style="padding: 10px; float:left;  width: 460px; height: 80px;">
+										<img style="width: 20px; " src="<c:url value='/resources/images/ok.gif' />" />
+										<span style=" font-size: 16pt; font-weight: bold;">${element.nazwa}</span>
+										<c:set var="dat" value="${element.dataDodania}" />
+										<span style="display:block; margin-top: 40px; font-size: 12pt;"><fmt:formatDate value="${dat}" /></span>
+									</div>
+									<div style="text-align:right; padding: 10px; float:left;  width: 180px; height: 80px;">
+										<span style="font-size: 16pt; font-weight: bold;">${element.cena} zł</span>
+										
+										<c:choose>
+											<c:when test="${czyKupTeraz[status.count-1]}">
+												<span style="display:block; margin-top: 40px; font-size: 12pt;">Kup Teraz</span>
+											</c:when>
+											<c:otherwise>
+												<span style="display:block; margin-top: 40px; font-size: 12pt;">Licytacja</span>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
 						</div>
-						
-				
-				</div>
-				</br>
-				</br>
-				<div style='display:block; margin-left: 75px; padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Opis: </span> </br><span >${produkt.opis}</span></div>
-				</br>
-				<div style="display:block; margin-left: 75px;">
-					<span style="font-size: 14pt; color: #8AC74A;" >Zdjecia produktu:</span></br>
-					<c:choose>
-						<c:when test="${!empty zdjecia}">
-								<c:forEach items="${zdjecia}" var="zdj"> 
-									<img style="margin: 5px; width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" />
-								</c:forEach>
-						</c:when>
-						<c:otherwise>
-								<span style="margin-left: 20px; font-size: 14pt;" >brak zdjęć produktu</span>
-						</c:otherwise>
-					</c:choose>
-					
+						</a>
+					</c:forEach>
 					
 				</div>
 			</div>

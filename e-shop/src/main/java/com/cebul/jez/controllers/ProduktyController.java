@@ -9,11 +9,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cebul.jez.entity.Kategoria;
 import com.cebul.jez.entity.Produkty;
+import com.cebul.jez.entity.ProduktyKupTeraz;
+import com.cebul.jez.entity.User;
 import com.cebul.jez.entity.Zdjecie;
 import com.cebul.jez.service.KategorieService;
 import com.cebul.jez.service.ProduktyService;
+import com.cebul.jez.useful.ShoppingCart;
 
 @Controller
 public class ProduktyController 
@@ -33,6 +38,9 @@ public class ProduktyController
 	
 	@Autowired
 	private KategorieService kategorieService;
+	
+	@Autowired
+	private ShoppingCart shoppingCart;
 	
 	@RequestMapping(value = {"/produkty/{produktId}/"}, method = RequestMethod.GET)
 	public String infoProdukt(@PathVariable Integer produktId, Model model, HttpSession session){
@@ -45,17 +53,32 @@ public class ProduktyController
 		String path = katGlow.getNazwa()+" >>> "+produkt.getKategorie().getNazwa();
 		List<Kategoria> podkategorie = kategorieService.getPodKategory(katGlow.getId());
 		
+		boolean czyKupTeraz = false;
+		if(produkt instanceof ProduktyKupTeraz)
+			czyKupTeraz = true;
+		
 		model.addAttribute("podkategorie", podkategorie);
 		model.addAttribute("produkt", produkt);
 		model.addAttribute("path", path);
 		model.addAttribute("zdjecia", zdjecia);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		//model.addAttribute("prod",  new Produkty());
 		
 		return "produkt";
 	}
 	@RequestMapping(value = {"/produkty"})
-	public String ksadka(Model model)
+	public String mainProdukty(Model model)
 	{
 		return "produkt";
+	}
+	
+	@RequestMapping(value = {"/produkty/addToCart/"}, method=RequestMethod.POST)
+	public String addToCart(Produkty produkt, Model model)
+	{
+		Produkty p = produktyService.getProdukt(produkt.getId());
+		shoppingCart.addItem(p);
+		
+		return "redirect:/koszyk";
 	}
 	@ResponseBody
 	@RequestMapping(value = "/prodimag/{prodimageId}", method = RequestMethod.GET, produces="prodimag/*")

@@ -11,8 +11,8 @@
 	<meta content="pl" http-equiv="Content-Language">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>e-shop</title>
-<link href="${pageContext.request.contextPath}/resources/css/index.css"
-	type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
@@ -96,11 +96,32 @@
 		</div>
 		<div id='main'>
 			<div id='main-left'>
-				filtr:
-				
-				- podkategoria
-				- kupteraz/ licytuj
-				-cena
+				<form>
+					<c:choose>
+						<c:when test="${hasPodkategory}">
+								<span style="font-weight: bold;">Podkategoria:</span>
+								</br>
+								<c:forEach items="${podkategorie}" var="element"> 
+									<input type="checkbox" name="kat${element.id}" value="${element.id}"  />${element.nazwa}
+									</br>
+								</c:forEach>
+								</br>
+						</c:when>
+					</c:choose>
+					<span style="font-weight: bold;">Cena:</span>
+					</br>
+					od:<Input type="text" name="cenaOd" id="cenaOd" style="width: 40px; height: 20px;" />
+					do:<Input type="text" name="cenaDo" id="cenaDo" style="width: 40px; height: 20px;"/>
+					</br>
+					</br>
+					<span style="font-weight: bold;">Licytuj / KupTeraz</span>
+					</br>
+					<input style="width: 15px;" type="checkbox" name="kupTeraz" value="tak"  />Kup Teraz
+					</br>
+					<input style="width: 15px;" type="checkbox" name="licytuj" value="tak"  />Licytuj
+					</br>
+					<input class="sub" style="margin-left: 0px;" type="submit" value="Szukaj" />
+				</form>
 								
 			</div>
 			<div id='main-right' style='padding-left: 10px; overflow-y: scroll;overflow-x:hidden;'>
