@@ -133,3 +133,9 @@ body{
 {
 	padding: 5px;
 }
+.produktLink
+{
+	text-decoration: none;
+	border: 0px;
+	color: black;
+}

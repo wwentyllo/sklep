@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cebul.jez.entity.Produkty;
 import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.entity.ProduktyLicytuj;
+import com.cebul.jez.entity.Zdjecie;
 import com.cebul.jez.model.ProduktyDao;
 
 
@@ -48,5 +49,30 @@ public class ProduktyService
 	public boolean saveProduktLicytuj(ProduktyLicytuj p)
 	{
 		return produktyDao.saveProduktLicytuj(p);
+	}
+	@Transactional
+	public List<Produkty> getLastFourProdukt()
+	{
+		return produktyDao.getLastFourProdukt();
+	}
+	@Transactional
+	public List<Integer> getZdjeciaId(Produkty p)
+	{
+		return produktyDao.getZdjeciaId(p);
+	}
+	@Transactional
+	public Zdjecie getZdjecie(Integer id)
+	{
+		return produktyDao.getZdjecie(id);
+	}
+	@Transactional
+	public List<Produkty> getFullProduktyLike(String like, Integer kategoria)
+	{
+		return produktyDao.getFullProduktyLike(like, kategoria);
+	}
+	@Transactional
+	public List<Produkty> getFullProduktyLike(String like)
+	{
+		return produktyDao.getFullProduktyLike(like);
 	}
 }

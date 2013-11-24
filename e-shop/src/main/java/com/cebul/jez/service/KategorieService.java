@@ -32,4 +32,9 @@ public class KategorieService
 	{
 		return kategorieDao.getPodKategory(parent);
 	}
+	@Transactional
+	public Kategoria getMainKategory(Kategoria podkategoria)
+	{
+		return kategorieDao.getMainKategory(podkategoria);
+	}
 }

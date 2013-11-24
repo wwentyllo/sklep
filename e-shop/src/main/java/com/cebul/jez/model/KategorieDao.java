@@ -35,6 +35,14 @@ public class KategorieDao
 		return result;
 		
 	}
+	public Kategoria getMainKategory(Kategoria podkategoria)
+	{
+		Session session = getSessionFactory();
+		Query query = session.createQuery("from Kategoria WHERE id = :idKat")
+				.setParameter("idKat", podkategoria.getId() );
+		Kategoria result = (Kategoria) query.list().get(0);
+		return result;
+	}
 	public List<Kategoria> getPodKategory(Integer parent)
 	{
 		

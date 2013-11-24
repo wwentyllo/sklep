@@ -1,5 +1,6 @@
 package com.cebul.jez.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,18 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cebul.jez.entity.Produkty;
+import com.cebul.jez.entity.ProduktyKupTeraz;
 import com.cebul.jez.service.ProduktyService;
 import com.cebul.jez.useful.JsonObject;
 
 
 @Controller
-@RequestMapping("/szukaj/szukaj.json")
+@RequestMapping("/szukaj")
 public class SzukajController 
 {
 	@Autowired
 	private ProduktyService produktyService;
 	
-	@RequestMapping(method = RequestMethod.GET, params="slowo")
+	@RequestMapping(value="/szukaj.json", method = RequestMethod.GET, params="slowo")
 	public @ResponseBody JsonObject znajdzWyszukiwarka(Model model, @RequestParam String slowo) 
 	{
 		List<String> r = produktyService.getProduktyLike(slowo);
@@ -35,5 +37,34 @@ public class SzukajController
 		
 		return jso;
 	}
+	@RequestMapping(value="/szukajProd/", method = RequestMethod.GET, params={"szukanaKat","szukanaFraza"})
+	public String znajdzWyszukiwarka(Model model, @RequestParam Integer szukanaKat, @RequestParam String szukanaFraza) 
+	{
+		List<Produkty> produkty;
+		
+		if(szukanaKat.equals(0))
+			produkty = produktyService.getFullProduktyLike(szukanaFraza);
+		else
+			produkty = produktyService.getFullProduktyLike(szukanaFraza, szukanaKat);
+		//System.out.println(produkty.size());
+		
+		List<Boolean> czyKupTeraz = new ArrayList<Boolean>();
+		
+		for(Produkty p : produkty)
+		{
+			if(p instanceof ProduktyKupTeraz)
+			{
+				czyKupTeraz.add(true);
+				System.out.println("kup teraz");
+			}
+			else
+				czyKupTeraz.add(false);
+		}
 	
+		
+		model.addAttribute("szukaneProdukty", produkty);
+		model.addAttribute("czyKupTeraz", czyKupTeraz);
+		
+		return "szukaneProdukty";
+	}
 }

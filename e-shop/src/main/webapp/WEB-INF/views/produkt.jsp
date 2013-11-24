@@ -10,8 +10,8 @@
 	<meta content="pl" http-equiv="Content-Language">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>e-shop</title>
-<link href="${pageContext.request.contextPath}/resources/css/index.css"
-	type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/index.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/reg.css" type="text/css" rel="stylesheet">
 <script src="<c:url value='/resources/js/jquery.js' />" type="text/javascript" ></script>
 <script src="<c:url value='/resources/js/mainJs.js' />" type="text/javascript" ></script>
 <script>
@@ -54,12 +54,12 @@
 			</div>
 		</div>
 		<div id='searchDiv'>
-			
+			<form action="" method="GET">
 				<table>
 					<tr>
-						<form action="${pageContext.request.contextPath}/szukaj/szukajProd/" method="get">
+						<form action="/szukaj" method="post">
 							<td>
-								<input id='szukanaFraza' name="szukanaFraza" type="text" autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;"  value="Wpisz czego szuaksz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >	
+								<input autocomplete="off" style="padding: 2px; padding-left: 8px;height: 35px; width: 400px; margin-left: 10px; margin-top: 5px;" id='szukanaFraza' type="text" value="Wpisz czego szuaksz..." onblur="ukryjPodpowiedzi();" onkeyup="sprawdzSlowo();" onfocus="searchFocus();" >	
 							</td>
 							<td>
 								<select name='szukanaKat' id='szukanaKat' style="height: 35px; width: 160px; margin-top: 5px; background-color: #EDEDED;">
@@ -91,37 +91,64 @@
 						
 					</tr>
 				</table>
-			
+			</form>
 		</div>
 		<div id='main'>
 			<div id='main-left'>
-			<c:forEach items="${kategoryList}" var="element"> 
+			<c:forEach items="${podkategorie}" var="element"> 
 				<a href="<c:url value='/kategoria/${element.id}' />" class="categorieLeft" onmouseover="showPodkategorie()">
 					${element.nazwa}
 				</a>
 			</c:forEach>
 								
 			</div>
-			<div id='main-right' align='center' style='padding-left: 10px;'>
-				<div align='center' style='margin-left: 75px;'>
-					<p style="font-size: 16pt; color: #8AC74A;" ><b>Ostatnio dodane produkty </b></p>
-						<c:forEach items="${lastFourItems}" var="element"> 
-							<a class='produktLink' href="<c:url value='/produkty/${element.id}/' />">
-								<div style='display: block; float: left; padding: 5px;'>
-									<c:choose>
-										<c:when test="${!empty element.zdjecie}">
-											<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/imag/${element.id}" />
-										</c:when>
-										<c:otherwise>
-											<img style="width: 200px; height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
-										</c:otherwise>
-									</c:choose>
-									
-									<div style='padding: 3px;'><span>${element.nazwa}</span></div>
-									<div style='padding: 3px;'><span>${element.cena} zł</span></div>
-								</div>
-							</a>
-					</c:forEach>
+			<div id='main-right' style='padding-left: 10px; padding-top: 10px;'>
+				<div  style='margin-left: 75px;'>
+					<span style="font-size: 12pt; display: block; color: gray; margin-bottom: 5px;">${path}</span>
+					
+						<div style='margin-right: 20px; margin-right: 10px; float: left; padding: 5px; border: 1px solid gray; width: 200px;'>
+								<c:choose>
+								<c:when test="${!empty produkt.zdjecie}">
+										<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/imag/${produkt.id}" />
+								</c:when>
+									<c:otherwise>
+										<img style="width: 200px; height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
+									</c:otherwise>
+								</c:choose>
+						</div>
+						
+						</br>
+						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Nazwa: </span> <span>${produkt.nazwa}</span></div>
+						</br>
+						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Cena: </span> <span>${produkt.cena} zł</span></div>
+						</br>
+						<div style='padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Sprzedający:</span> <span>${produkt.user.login} zł</span></div>
+						</br>
+						<div style='padding: 3px;'>
+							<input style="margin-left: 5px;" class="sub" type="submit" value="Kup teraz" />
+							<input style="margin-left: 5px;" class="sub" type="submit" value="Licytuj" />
+						</div>
+						
+				
+				</div>
+				</br>
+				</br>
+				<div style='display:block; margin-left: 75px; padding: 3px;'><span style="font-size: 14pt; color: #8AC74A;">Opis: </span> </br><span >${produkt.opis}</span></div>
+				</br>
+				<div style="display:block; margin-left: 75px;">
+					<span style="font-size: 14pt; color: #8AC74A;" >Zdjecia produktu:</span></br>
+					<c:choose>
+						<c:when test="${!empty zdjecia}">
+								<c:forEach items="${zdjecia}" var="zdj"> 
+									<img style="margin: 5px; width: 200px; height: 200px;" src="${pageContext.request.contextPath}/images/13" />
+								</c:forEach>
+						</c:when>
+						<c:otherwise>
+								<span style="margin-left: 20px; font-size: 14pt;" >brak zdjęć produktu</span>
+						</c:otherwise>
+					</c:choose>
+					
+					
 				</div>
 			</div>
 		</div>

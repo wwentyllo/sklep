@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html;charset=UTF-8" %> 
 <%@ page session="true"%>
 <html>
@@ -95,34 +96,51 @@
 		</div>
 		<div id='main'>
 			<div id='main-left'>
-			<c:forEach items="${kategoryList}" var="element"> 
-				<a href="<c:url value='/kategoria/${element.id}' />" class="categorieLeft" onmouseover="showPodkategorie()">
-					${element.nazwa}
-				</a>
-			</c:forEach>
+				filtr:
+				
+				- podkategoria
+				- kupteraz/ licytuj
+				-cena
 								
 			</div>
-			<div id='main-right' align='center' style='padding-left: 10px;'>
-				<div align='center' style='margin-left: 75px;'>
-					<p style="font-size: 16pt; color: #8AC74A;" ><b>Ostatnio dodane produkty </b></p>
-						<c:forEach items="${lastFourItems}" var="element"> 
-							<a class='produktLink' href="<c:url value='/produkty/${element.id}/' />">
-								<div style='display: block; float: left; padding: 5px;'>
+			<div id='main-right' style='padding-left: 10px; overflow-y: scroll;overflow-x:hidden;'>
+				<c:forEach items="${szukaneProdukty}" var="element" varStatus="status"> 
+					<a style="color: black; text-decoration: none; border: 0px;" href="${pageContext.request.contextPath}/produkty/${element.id}/">
+						<div style="float: left; width: 800px; border-bottom: 1px solid #DDDDDD">
+							
+							<div style="float: left;">
+								<c:choose>
+									<c:when test="${!empty element.zdjecie}">
+										<img style="width: 100px; " src="${pageContext.request.contextPath}/images/${element.id}" />
+									</c:when>
+									<c:otherwise>
+										<img style="width: 100px; " src="<c:url value='/resources/images/unknownItem.png' />" />
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div style="width: 780px;">
+								<div style="padding: 10px; float:left;  width: 440px; height: 80px;">
+									<img style="width: 20px; " src="<c:url value='/resources/images/ok.gif' />" />
+									<span style=" font-size: 16pt; font-weight: bold;">${element.nazwa}</span>
+									<c:set var="dat" value="${element.dataDodania}" />
+									<span style="display:block; margin-top: 40px; font-size: 12pt;"><fmt:formatDate value="${dat}" /></span>
+								</div>
+								<div style="text-align:right; padding: 10px; float:left;  width: 180px; height: 80px;">
+									<span style="font-size: 16pt; font-weight: bold;">${element.cena} zł</span>
+									
 									<c:choose>
-										<c:when test="${!empty element.zdjecie}">
-											<img style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/imag/${element.id}" />
+										<c:when test="${czyKupTeraz[status.count-1]}">
+											<span style="display:block; margin-top: 40px; font-size: 12pt;">Kup Teraz</span>
 										</c:when>
 										<c:otherwise>
-											<img style="width: 200px; height: 200px;" src="<c:url value='/resources/images/unknownItem.png' />" />
+											<span style="display:block; margin-top: 40px; font-size: 12pt;">Licytacja</span>
 										</c:otherwise>
 									</c:choose>
-									
-									<div style='padding: 3px;'><span>${element.nazwa}</span></div>
-									<div style='padding: 3px;'><span>${element.cena} zł</span></div>
 								</div>
-							</a>
-					</c:forEach>
-				</div>
+							</div>
+						</div>
+					</a>
+				</c:forEach>
 			</div>
 		</div>
 		<div id='bottom'>
