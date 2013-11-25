@@ -58,7 +58,7 @@
        	   </props>
 	</property>
 </bean>
-
+<!--  
 <bean  class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
 	<property name="flowRegistry" ref="flowRegistry"></property>
 </bean>
@@ -71,7 +71,7 @@
 <flow:flow-registry id="flowRegistry" base-path="/WEB-INF/flows">
 	<flow:flow-location-pattern value="/**/*-flow.xml"/>
 </flow:flow-registry>
-
+-->
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 <tx:annotation-driven transaction-manager="transactionManager"/>
